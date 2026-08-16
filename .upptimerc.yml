@@ -1,31 +1,43 @@
-# Change these first
-owner: upptime # Your GitHub organization or username, where this repository lives
-repo: upptime # The name of this repository
+owner: themillhouse
+repo: ratifia-status-stage
+
+# INTERNAL — stage monitoring only. GitHub Pages is intentionally NOT enabled
+# on this repo; there is no published page. Upptime still runs the checks,
+# commits history, and opens incident issues, which is all we want from stage.
+#
+# Stage belongs nowhere near status.ratifia.com: a customer seeing "Stage API
+# down" learns nothing useful, and stage instability would drag the published
+# prod uptime numbers. Upptime has no per-site "hide from page" option, so
+# separating the environments means separating the repos.
 
 sites:
-  - name: Google
-    url: https://www.google.com
-  - name: Wikipedia
-    url: https://en.wikipedia.org
-  - name: Hacker News
-    url: https://news.ycombinator.com
-  - name: Secret Site
-    url: $SECRET_SITE
+  # Not behind the stage gate — the gate fronts the dashboard, not the API.
+  - name: Stage API
+    url: https://api.stage.ratifia.com/health
+    maxResponseTime: 5000
+
+  # app.stage.ratifia.com sits behind the Traefik stage gate, which 307s any
+  # request without the `ratifia_stage` cookie to https://ratifia.com/stage.
+  # The cookie token is supplied from an encrypted repo secret so the check can
+  # pass the gate. As on prod, /sign-in is used rather than the root: Clerk's
+  # auth.protect() answers a signed-out GET / with 404.
+  - name: Stage Dashboard
+    url: https://app.stage.ratifia.com/sign-in
+    maxResponseTime: 8000
+    headers:
+      - "Cookie: ratifia_stage=$STAGE_COOKIE_TOKEN"
+
+# Allowlist for $VAR substitution above. Set STAGE_COOKIE_TOKEN as a repository
+# secret; it must equal the `stageToken` value in the Traefik rule
+# (tf-do-resources apps/stage-ratifia).
+secrets:
+  - STAGE_COOKIE_TOKEN
 
 status-website:
-  # Add your custom domain name, or remove the `cname` line if you don't have a domain
-  # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
-  cname: demo.upptime.js.org
-  # baseUrl: /your-repo-name
-  logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
-  name: Upptime
-  introTitle: "**Upptime** is the open-source uptime monitor and status page, powered entirely by GitHub."
-  introMessage: This is a sample status page which uses **real-time** data from our [GitHub repository](https://github.com/upptime/upptime). No server required — just GitHub Actions, Issues, and Pages. [**Get your own for free**](https://github.com/upptime/upptime)
-  navbar:
-    - title: Status
-      href: /
-    - title: GitHub
-      href: https://github.com/$OWNER/$REPO
+  # No `cname` and no Pages deployment — deliberately unpublished.
+  name: Ratifia Stage (internal)
+  introTitle: Ratifia Stage — internal monitoring
+  introMessage: Internal stage monitoring. Not a customer-facing status page.
 
-# Upptime also supports notifications, assigning issues, and more
-# See https://upptime.js.org/docs/configuration
+assignees:
+  - Souvent22
