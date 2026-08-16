@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Stage API",
+    "url": "https://api.stage.ratifia.com/health",
+    "icon": "https://icons.duckduckgo.com/ip3/api.stage.ratifia.com.ico",
+    "slug": "stage-api",
+    "status": "up",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
+    "time": 283,
+    "timeDay": 283,
+    "timeWeek": 283,
+    "timeMonth": 283,
+    "timeYear": 283,
+    "dailyMinutesDown": {}
+  },
+  {
+    "name": "Stage Dashboard",
+    "url": "https://app.stage.ratifia.com/sign-in",
+    "icon": "https://icons.duckduckgo.com/ip3/app.stage.ratifia.com.ico",
+    "slug": "stage-dashboard",
+    "status": "up",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
+    "time": 503,
+    "timeDay": 503,
+    "timeWeek": 503,
+    "timeMonth": 503,
+    "timeYear": 503,
+    "dailyMinutesDown": {}
+  }
+]
